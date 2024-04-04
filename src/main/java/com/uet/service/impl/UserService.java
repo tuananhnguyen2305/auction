@@ -42,4 +42,26 @@ public class UserService implements IUserService{
 		return userDTOs;
 	}
 
+	@Override
+	public UserDTO deleleOneById(String id) {
+		User user = userRepo.findOne(id);
+		if (user != null) {
+			userRepo.delete(id);
+			return userConverter.toDTO(user);
+		}
+		return null;
+	}
+
+	@Override
+	public UserDTO updateOneById(String id, UserDTO userDTO) {
+		User user = userRepo.findOne(id);
+		if (user != null) {
+			user = userConverter.toEntity(userDTO);
+			user.setUsername(id);
+			userRepo.save(user);
+			return userConverter.toDTO(user);
+		}
+		return null;
+	}
+
 }

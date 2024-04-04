@@ -31,7 +31,7 @@ public class LoginAPI {
 	public String login(@RequestBody UserDTO userDTO) {
 		String id = userDTO.getUsername();
 		UserDTO oldDTO = userService.findOneById(id);
-		if (oldDTO != null) {
+		if (oldDTO == null) {
 			userService.save(userDTO);
 			return "Đăng ký thành công";
 		}

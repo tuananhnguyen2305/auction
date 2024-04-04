@@ -8,8 +8,13 @@ import com.uet.entity.User;
 @Component
 public class UserConverter {
 	public User toEntity(UserDTO userDTO) {
+		if (userDTO == null) {
+			return null;
+		}
 		User user = new User();
-		user.setUsername(userDTO.getUsername());
+		if (userDTO.getUsername() != null) {
+			user.setUsername(userDTO.getUsername());
+		}
 		user.setPassword(userDTO.getPassword());
 		user.setAccountType(userDTO.getAccountType());
 		user.setFullname(userDTO.getFullname());
@@ -21,6 +26,9 @@ public class UserConverter {
 	}
 	
 	public UserDTO toDTO(User user) {
+		if (user == null) {
+			return null;
+		}
 		UserDTO userDTO = new UserDTO();
 		userDTO.setUsername(user.getUsername());
 		userDTO.setPassword(user.getPassword());
