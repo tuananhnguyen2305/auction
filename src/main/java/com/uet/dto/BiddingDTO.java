@@ -2,6 +2,8 @@ package com.uet.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class BiddingDTO {
 	private int biddingId;
 	
@@ -11,6 +13,7 @@ public class BiddingDTO {
 	
 	private int amount;
 	
+	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
 	private Date biddingTime;
 
 	public int getBiddingId() {

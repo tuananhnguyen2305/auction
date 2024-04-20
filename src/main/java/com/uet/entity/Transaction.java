@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Table
 @Entity
 public class Transaction {
@@ -23,6 +25,7 @@ public class Transaction {
 	private int amount;
 	
 	@Column
+	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
 	private Date date;
 
 	public String getId() {

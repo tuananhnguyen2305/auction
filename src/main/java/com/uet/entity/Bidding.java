@@ -38,6 +38,7 @@ public class Bidding{
 	
 	@Column
 	@CreatedDate
+	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
 	private Date createDate;
 
 	public int getBiddingId() {

@@ -28,9 +28,14 @@ public class BiddingService implements IBiddingService{
 	}
 
 	@Override
-	public BiddingDTO findOneById(int id) {
-		Bidding bidding = biddingRepo.findOne(id);
-		return biddingConverter.toDTO(bidding);
+	public BiddingDTO findLastBiddingOfAnAuctionSession(String id) {
+		List<Bidding> biddings = biddingRepo.findAll();
+		for(int i = biddings.size() - 1; i >= 0; i--) {
+			if (biddings.get(i).getAuctionSession().getAuctionId().equals(id)) {
+				return biddingConverter.toDTO(biddings.get(i));
+			}
+		}
+		return null;
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.uet.enums.Status;
 
 @Table
@@ -24,9 +25,11 @@ public class AuctionSession {
 	private String auctionId;
 	
 	@Column
+	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
 	private Date beginningTime;
 	
 	@Column
+	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
 	private Date endingTime;
 	
 	@Enumerated(EnumType.STRING)

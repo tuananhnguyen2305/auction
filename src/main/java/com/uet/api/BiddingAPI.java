@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uet.dto.BiddingDTO;
+import com.uet.entity.Bidding;
+import com.uet.repository.BiddingRepo;
 import com.uet.service.IBiddingService;
 
 @RestController
 public class BiddingAPI {
 	@Autowired
 	private IBiddingService biddingService;
+	
+	@Autowired
+	private BiddingRepo biddingRepo;
 	
 	@PostMapping("/bidding")
 	public ResponseEntity<?> create(@RequestBody BiddingDTO biddingDTO) {
@@ -51,4 +56,14 @@ public class BiddingAPI {
 			return new ResponseEntity<>("Xóa lượt đấu giá không thành công", HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping("/bidding/{auctionId}/max")
+	public ResponseEntity<?> findLastBiddingOfAnAuctionSession(@PathVariable String auctionId) {
+		try {
+			return new ResponseEntity<>(biddingService.findLastBiddingOfAnAuctionSession(auctionId), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Không tồn tại", HttpStatus.BAD_REQUEST);
+		}
+	}
+
 }

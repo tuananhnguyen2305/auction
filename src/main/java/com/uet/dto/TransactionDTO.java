@@ -2,6 +2,8 @@ package com.uet.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class TransactionDTO {
 	private String id;
 	
@@ -13,6 +15,7 @@ public class TransactionDTO {
 	
 	private int amount;
 	
+	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
 	private Date date;
 
 	public String getId() {

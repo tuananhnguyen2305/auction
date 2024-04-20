@@ -2,13 +2,16 @@ package com.uet.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.uet.enums.Status;
 
 public class AuctionSessionDTO {
 	private String auctionId;
 	
+	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
 	private Date beginningTime;
 	
+	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
 	private Date endingTime;
 	
 	private Status status;

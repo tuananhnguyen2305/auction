@@ -6,7 +6,7 @@ import com.uet.dto.BiddingDTO;
 
 public interface IBiddingService {
 	BiddingDTO create(BiddingDTO biddingDTO);
-	BiddingDTO findOneById(int id);
+	BiddingDTO findLastBiddingOfAnAuctionSession(String id);
 	List<BiddingDTO> findAll();
 	List<BiddingDTO> findAllBiddingsOfAnAuctionSession(String id);
 	BiddingDTO deleteOneById(int id);
