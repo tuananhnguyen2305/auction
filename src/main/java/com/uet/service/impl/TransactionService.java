@@ -35,5 +35,30 @@ public class TransactionService implements ITransactionService {
 		}
 		return transactionDTOs;
 	}
+
+	@Override
+	public TransactionDTO fineOneById(String id) {
+		Transaction transaction = transactionRepo.findOne(id);
+		return transactionConverter.toDTO(transaction);
+	}
+
+	@Override
+	public TransactionDTO deleteOneById(String id) {
+		Transaction transaction = transactionRepo.findOne(id);
+		transactionRepo.delete(transaction);
+		return transactionConverter.toDTO(transaction);
+	}
+
+	@Override
+	public TransactionDTO updateOneById(String id, TransactionDTO transactionDTO) {
+		Transaction transaction = transactionRepo.findOne(id);
+		if (transaction != null) {
+			transaction = transactionConverter.toEntity(transactionDTO);
+			transaction.setId(id);
+			transactionRepo.save(transaction);
+			return transactionConverter.toDTO(transaction);
+		}
+		return null;
+	}
 	
 }

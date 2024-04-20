@@ -42,4 +42,11 @@ public class AuctionSessionService implements IAuctionSessionService{
 		return auctionSessionDTOs;
 	}
 
+	@Override
+	public AuctionSessionDTO deleteOneById(String id) {
+		AuctionSession acAuctionSession = auctionSessionRepo.findOne(id);
+		auctionSessionRepo.delete(acAuctionSession);
+		return auctionSessionConverter.toDTO(acAuctionSession);
+	}
+
 }

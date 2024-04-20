@@ -15,19 +15,19 @@ public class TransactionConverter {
 	
 	public Transaction toEntity(TransactionDTO transactionDTO) {
 		Transaction transaction = new Transaction();
+		if(transactionDTO.getId() != null) {
+			transaction.setId(transaction.getId());
+		}
 		transaction.setAmount(transactionDTO.getAmount());
 		transaction.setDate(transactionDTO.getDate());
 		transaction.setOwnerId(transactionDTO.getOwnerId());
 		transaction.setWinerId(transactionDTO.getWinerId());
-		AuctionSession auctionSession = auctionSessionRepo.findOne(transactionDTO.getAuctionId());
-		transaction.setAuctionSession(auctionSession);
 		return transaction;
 	}
 	
 	public TransactionDTO toDTO(Transaction transaction) {
 		TransactionDTO transactionDTO = new TransactionDTO();
 		transactionDTO.setAmount(transaction.getAmount());
-		transactionDTO.setAuctionId(transaction.getAuctionSession().getAuctionId());
 		transactionDTO.setDate(transaction.getDate());
 		transactionDTO.setId(transaction.getId());
 		transactionDTO.setOwnerId(transaction.getOwnerId());

@@ -1,13 +1,18 @@
 package com.uet.api;
 
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.api.Http;
 import com.uet.dto.LoginDTO;
 import com.uet.dto.UserDTO;
 import com.uet.service.impl.UserService;
+
+import javassist.expr.NewArray;
 
 @RestController
 public class LoginAPI {
@@ -15,26 +20,27 @@ public class LoginAPI {
 	private UserService userService;
 	
 	@PostMapping("/login")
-	public String login(@RequestBody LoginDTO loginDTO) {
+	public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
 		UserDTO userDTO = userService.findOneById(loginDTO.getUsername());
 		if (userDTO == null) {
-			return "Tài khoản không tồn tại";
+			return new ResponseEntity<>("Đăng nhập không thành công", org.springframework.http.HttpStatus.UNAUTHORIZED);
+			
 		}
 		String password = userDTO.getPassword();
 		if (!password.equals(loginDTO.getPassword())) {
-			return "Sai mật khẩu";
+			return new ResponseEntity<>("Đăng nhập không thành công", org.springframework.http.HttpStatus.UNAUTHORIZED);
 		}
-		return "Đăng nhập thành công";
+		return new ResponseEntity<>("Đăng nhập thành công", org.springframework.http.HttpStatus.OK);
 	}
 	
 	@PostMapping("/registration")
-	public String login(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
 		String id = userDTO.getUsername();
 		UserDTO oldDTO = userService.findOneById(id);
 		if (oldDTO == null) {
 			userService.save(userDTO);
-			return "Đăng ký thành công";
+			return new ResponseEntity<>("Đăng ký thành công", org.springframework.http.HttpStatus.OK);
 		}
-		return "Tài khoản đã tồn tại";
+		return new ResponseEntity<>("Tài khoản đã tồn tại", org.springframework.http.HttpStatus.OK);
 	}
 }

@@ -4,23 +4,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Table
 @Entity
 public class Transaction {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
-	@OneToOne
-	@JoinColumn(name = "auction_id")
-	private AuctionSession auctionSession;
+	private String id;
 	
 	@Column
 	private String ownerId;
@@ -34,20 +25,12 @@ public class Transaction {
 	@Column
 	private Date date;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
-	}
-
-	public AuctionSession getAuctionSession() {
-		return auctionSession;
-	}
-
-	public void setAuctionSession(AuctionSession auctionSession) {
-		this.auctionSession = auctionSession;
 	}
 
 	public String getOwnerId() {

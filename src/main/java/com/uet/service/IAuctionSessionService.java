@@ -8,4 +8,5 @@ public interface IAuctionSessionService {
 	AuctionSessionDTO save(AuctionSessionDTO auctionSessionDTO);
 	AuctionSessionDTO findOneById(String id);
 	List<AuctionSessionDTO> findAll();
+	AuctionSessionDTO deleteOneById(String id);
 }

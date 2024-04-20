@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.uet.enums.Status;
@@ -45,7 +46,8 @@ public class AuctionSession {
 	@JoinColumn(name = "license_plate_id")
 	private LicensePlate licensePlate;
 	
-	@OneToOne(mappedBy = "auctionSession")
+	@OneToOne()
+	@PrimaryKeyJoinColumn
 	private Transaction transaction;
 	
 	public String getAuctionId() {

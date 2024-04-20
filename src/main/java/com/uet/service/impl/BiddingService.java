@@ -42,4 +42,23 @@ public class BiddingService implements IBiddingService{
 		return biddingDTOs;
 	}
 
+	@Override
+	public BiddingDTO deleteOneById(int id) {
+		Bidding bidding = biddingRepo.findOne(id);
+		biddingRepo.delete(bidding);
+		return biddingConverter.toDTO(bidding);
+	}
+
+	@Override
+	public List<BiddingDTO> findAllBiddingsOfAnAuctionSession(String id) {
+		List<Bidding> biddings = biddingRepo.findAll();
+		List<BiddingDTO> biddingDTOs = new ArrayList<BiddingDTO>();
+		for(Bidding bidding: biddings) {
+			if (bidding.getAuctionSession().getAuctionId().equals(id)) {
+				biddingDTOs.add(biddingConverter.toDTO(bidding));
+			}
+		}
+		return biddingDTOs;
+	}
+
 }

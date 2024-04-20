@@ -41,5 +41,12 @@ public class LicensePlateService implements ILicensePlateService{
 		}
 		return licensePlateDTOs;
 	}
+
+	@Override
+	public LicensePlateDTO deleteOneById(String id) {
+		LicensePlate licensePlate = licensePlateRepo.findOne(id);
+		licensePlateRepo.delete(licensePlate);
+		return licensePlateConverter.toDTO(licensePlate);
+	}
 	
 }

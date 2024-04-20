@@ -8,4 +8,5 @@ public interface ILicensePlateService {
 	LicensePlateDTO save(LicensePlateDTO licensePlateDTO);
 	LicensePlateDTO findOneById(String id);
 	List<LicensePlateDTO> findAll();
+	LicensePlateDTO deleteOneById(String id);
 }

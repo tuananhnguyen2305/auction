@@ -1,8 +1,8 @@
 package com.uet.api;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,29 +20,48 @@ public class UserAPI {
 	private IUserService userService;
 	
 	@DeleteMapping("/user/{id}")
-	public UserDTO deleteOneById(@PathVariable String id) {
-		if (userService.findOneById(id) == null) {
-			return null;
+	public ResponseEntity<?> deleteOneById(@PathVariable String id) {
+		try {
+			return new ResponseEntity<>(userService.deleleOneById(id), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Xóa người dùng không thành công", HttpStatus.BAD_REQUEST); 
 		}
-		return userService.deleleOneById(id);
 	}
 	
 	@PutMapping("/user/{id}")
-	public UserDTO updateOneById(@PathVariable String id, @RequestBody UserDTO userDTO) {
-		if (userService.findOneById(id) == null) {
-			return null;
+	public ResponseEntity<?> updateOneById(@PathVariable String id, @RequestBody UserDTO userDTO) {
+		try {
+			return new ResponseEntity<>(userService.updateOneById(id, userDTO), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Cập nhật người dùng không thành công", HttpStatus.BAD_REQUEST);
 		}
-		return userService.updateOneById(id, userDTO);
 	}
 	
 	@GetMapping("/user/{username}")
-	public UserDTO findOneById(@PathVariable String username) {
-		return userService.findOneById(username);
+	public ResponseEntity<?> findOneById(@PathVariable String username) {
+		try {
+			return new ResponseEntity<>(userService.findOneById(username), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Không tồn tại", HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@GetMapping("/user")
-	public List<UserDTO> findAll() {
-		return userService.findAll();
+	public ResponseEntity<?> findAll() {
+		try {
+			return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Không tồn tại", HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping("/user")
+	public ResponseEntity<?> createOne(@RequestBody UserDTO userDTO) {
+		try {
+			return new ResponseEntity<>(userService.save(userDTO), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Tạo người dùng không thành công", HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 }
