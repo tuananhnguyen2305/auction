@@ -57,7 +57,7 @@ public class BiddingAPI {
 		}
 	}
 	
-	@GetMapping("/bidding/{auctionId}/max")
+	@GetMapping("/bidding/{auctionId}/latest")
 	public ResponseEntity<?> findLastBiddingOfAnAuctionSession(@PathVariable String auctionId) {
 		try {
 			return new ResponseEntity<>(biddingService.findLastBiddingOfAnAuctionSession(auctionId), HttpStatus.OK);

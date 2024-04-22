@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uet.dto.AuctionSessionDTO;
+import com.uet.dto.BiddingDTO;
 import com.uet.service.IAuctionSessionService;
+import com.uet.service.IBiddingService;
 
 @RestController
 public class AuctionSessionAPI {
 	@Autowired
 	private IAuctionSessionService auctionSessionService;
+	
+	@Autowired
+	private IBiddingService biddingService;
 	
 	@PostMapping("/auction_session")
 	public ResponseEntity<?> createOne(@RequestBody AuctionSessionDTO auctionSessionDTO) {
@@ -62,6 +67,10 @@ public class AuctionSessionAPI {
 	@DeleteMapping("/auction_session/{id}")
 	public ResponseEntity<?> deleteOne(@PathVariable String id) {
 		try {
+			List<BiddingDTO> biddingDTOs = biddingService.findAllBiddingsOfAnAuctionSession(id);
+			for (BiddingDTO biddingDTO : biddingDTOs) {
+				biddingService.deleteOneById(biddingDTO.getBiddingId());
+			}
 			return new ResponseEntity<>(auctionSessionService.deleteOneById(id), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("Xóa phiên đấu giá không thành công", HttpStatus.BAD_REQUEST);
