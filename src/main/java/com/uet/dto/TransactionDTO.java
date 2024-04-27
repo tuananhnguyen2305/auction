@@ -1,11 +1,7 @@
 package com.uet.dto;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class TransactionDTO {
-	private String id;
 	
 	private String auctionId;
 	
@@ -15,16 +11,8 @@ public class TransactionDTO {
 	
 	private int amount;
 	
-	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
-	private Date date;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
+	//@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
+	private String date;
 
 	public String getOwnerId() {
 		return ownerId;
@@ -42,11 +30,11 @@ public class TransactionDTO {
 		this.winerId = winerId;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

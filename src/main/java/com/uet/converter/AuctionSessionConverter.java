@@ -23,8 +23,8 @@ public class AuctionSessionConverter {
 		entity.setAuctionId(DTO.getAuctionId());
 		User user = userRepo.findOne(DTO.getUserId());
 		entity.setUser(user);
-		entity.setBeginningTime(DTO.getBeginningTime());
-		entity.setEndingTime(DTO.getEndingTime());
+		entity.setBeginningTime(DateStringConverter.convertToDate(DTO.getBeginningTime()));
+		entity.setEndingTime(DateStringConverter.convertToDate(DTO.getEndingTime()));
 		entity.setStatus(DTO.getStatus());
 		entity.setStartingPrice(DTO.getStartingPrice());
 		LicensePlate licensePlate = licensePlateRepo.findOne(DTO.getLicensePlateId());
@@ -36,11 +36,13 @@ public class AuctionSessionConverter {
 		AuctionSessionDTO DTO = new AuctionSessionDTO();
 		DTO.setAuctionId(entity.getAuctionId());
 		DTO.setUserId(entity.getUser().getUsername());
-		DTO.setBeginningTime(entity.getBeginningTime());
-		DTO.setEndingTime(entity.getEndingTime());
+		DTO.setBeginningTime(DateStringConverter.convertToString(entity.getBeginningTime()));
+		DTO.setEndingTime(DateStringConverter.convertToString(entity.getEndingTime()));
 		DTO.setStatus(entity.getStatus());
 		DTO.setStartingPrice(entity.getStartingPrice());
 		DTO.setLicensePlateId(entity.getLicensePlate().getLicensePlateId());
 		return DTO;
 	}
+	
+	
 }

@@ -16,6 +16,8 @@ public class UserDTO {
 	private String identityNumber;
 	
 	private String email;
+	
+	private int balance;
 
 	public String getUsername() {
 		return username;
@@ -80,4 +82,14 @@ public class UserDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public int getBalance() {
+		return balance;
+	}
+
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+	
+	
 }

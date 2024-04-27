@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.uet.converter.DateStringConverter;
 import com.uet.dto.AuctionSessionDTO;
 import com.uet.dto.BiddingDTO;
+import com.uet.enums.Status;
 import com.uet.service.IAuctionSessionService;
 import com.uet.service.IBiddingService;
+import com.uet.service.ITransactionService;
 
 @RestController
 public class AuctionSessionAPI {
@@ -24,32 +27,52 @@ public class AuctionSessionAPI {
 	private IAuctionSessionService auctionSessionService;
 	
 	@Autowired
+	private ITransactionService transactionService;
+	
+	@Autowired
 	private IBiddingService biddingService;
 	
 	@PostMapping("/auction_session")
 	public ResponseEntity<?> createOne(@RequestBody AuctionSessionDTO auctionSessionDTO) {
 		try {
+			if (DateStringConverter.convertToDate(auctionSessionDTO.getBeginningTime())
+					.after(DateStringConverter.convertToDate(auctionSessionDTO.getEndingTime()))) {
+				throw new Exception();
+			}
+			if (auctionSessionService.findOneById(auctionSessionDTO.getAuctionId()) != null) {
+				throw new Exception();
+			}
 			return new ResponseEntity<>(auctionSessionService.save(auctionSessionDTO), HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Tạo phiên đấu giá không thành công", HttpStatus.CREATED);
+			return new ResponseEntity<>("Tạo phiên đấu giá không thành công", HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@GetMapping("/auction_session/{id}")
 	public ResponseEntity<?> findOneById(@PathVariable String id) {
 		try {
-			return new ResponseEntity<>(auctionSessionService.findOneById(id), HttpStatus.OK);
+			AuctionSessionDTO auction = auctionSessionService.findOneById(id);
+			if(auction.getStatus() != Status.COMPLETE && auctionSessionService.isAuctionFinished(auction)) {
+				auctionSessionService.finishAuction(auction);
+			}
+			return new ResponseEntity<>(auction, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Cập nhật phiên đấu giá không thành công", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Không thành công", HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@GetMapping("/auction_session")
 	public ResponseEntity<?> findAll() {
 		try {
-			return new ResponseEntity<>(auctionSessionService.findAll(), HttpStatus.OK);
+			List<AuctionSessionDTO> auctions = auctionSessionService.findAll();
+			for (AuctionSessionDTO auction : auctions) {
+				if(auction.getStatus() != Status.COMPLETE && auctionSessionService.isAuctionFinished(auction)) {
+					auctionSessionService.finishAuction(auction);
+				}
+			}
+			return new ResponseEntity<>(auctions, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Cập nhật phiên đấu giá không thành công", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Không thành công", HttpStatus.BAD_REQUEST);
 		}
 	}
 	

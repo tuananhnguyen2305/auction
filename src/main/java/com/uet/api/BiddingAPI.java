@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.uet.dto.BiddingDTO;
-import com.uet.entity.Bidding;
 import com.uet.repository.BiddingRepo;
 import com.uet.service.IBiddingService;
 

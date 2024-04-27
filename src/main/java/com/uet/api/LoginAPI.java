@@ -20,7 +20,7 @@ public class LoginAPI {
 	private UserService userService;
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
+	public ResponseEntity<?> signIn(@RequestBody LoginDTO loginDTO) {
 		UserDTO userDTO = userService.findOneById(loginDTO.getUsername());
 		if (userDTO == null) {
 			return new ResponseEntity<>("Đăng nhập không thành công", org.springframework.http.HttpStatus.UNAUTHORIZED);
@@ -34,7 +34,7 @@ public class LoginAPI {
 	}
 	
 	@PostMapping("/registration")
-	public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<?> signUp(@RequestBody UserDTO userDTO) {
 		String id = userDTO.getUsername();
 		UserDTO oldDTO = userService.findOneById(id);
 		if (oldDTO == null) {

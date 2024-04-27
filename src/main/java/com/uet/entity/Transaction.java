@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class Transaction {
 	@Id
-	private String id;
+	private String auctionId;
 	
 	@Column
 	private String ownerId;
@@ -28,12 +28,12 @@ public class Transaction {
 	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
 	private Date date;
 
-	public String getId() {
-		return id;
+	public String getAuctionId() {
+		return auctionId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setAuctionId(String id) {
+		this.auctionId = id;
 	}
 
 	public String getOwnerId() {

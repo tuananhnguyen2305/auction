@@ -1,18 +1,15 @@
 package com.uet.dto;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.uet.enums.Status;
 
 public class AuctionSessionDTO {
 	private String auctionId;
 	
-	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
-	private Date beginningTime;
+	//@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
+	private String beginningTime;
 	
-	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
-	private Date endingTime;
+	//@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
+	private String endingTime;
 	
 	private Status status;
 	
@@ -30,19 +27,19 @@ public class AuctionSessionDTO {
 		this.auctionId = auctionId;
 	}
 
-	public Date getBeginningTime() {
+	public String getBeginningTime() {
 		return beginningTime;
 	}
 
-	public void setBeginningTime(Date beginningTime) {
+	public void setBeginningTime(String beginningTime) {
 		this.beginningTime = beginningTime;
 	}
 
-	public Date getEndingTime() {
+	public String getEndingTime() {
 		return endingTime;
 	}
 
-	public void setEndingTime(Date endingTime) {
+	public void setEndingTime(String endingTime) {
 		this.endingTime = endingTime;
 	}
 

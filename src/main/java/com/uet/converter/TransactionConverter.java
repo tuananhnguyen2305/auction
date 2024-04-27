@@ -15,11 +15,11 @@ public class TransactionConverter {
 	
 	public Transaction toEntity(TransactionDTO transactionDTO) {
 		Transaction transaction = new Transaction();
-		if(transactionDTO.getId() != null) {
-			transaction.setId(transaction.getId());
+		if(transactionDTO.getAuctionId() != null) {
+			transaction.setAuctionId(transactionDTO.getAuctionId());
 		}
 		transaction.setAmount(transactionDTO.getAmount());
-		transaction.setDate(transactionDTO.getDate());
+		transaction.setDate(DateStringConverter.convertToDate(transactionDTO.getDate()));
 		transaction.setOwnerId(transactionDTO.getOwnerId());
 		transaction.setWinerId(transactionDTO.getWinerId());
 		return transaction;
@@ -28,8 +28,8 @@ public class TransactionConverter {
 	public TransactionDTO toDTO(Transaction transaction) {
 		TransactionDTO transactionDTO = new TransactionDTO();
 		transactionDTO.setAmount(transaction.getAmount());
-		transactionDTO.setDate(transaction.getDate());
-		transactionDTO.setId(transaction.getId());
+		transactionDTO.setDate(DateStringConverter.convertToString(transaction.getDate()));
+		transactionDTO.setAuctionId(transaction.getAuctionId());
 		transactionDTO.setOwnerId(transaction.getOwnerId());
 		transactionDTO.setWinerId(transaction.getWinerId());
 		return transactionDTO;

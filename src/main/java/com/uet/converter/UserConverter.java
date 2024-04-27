@@ -22,6 +22,7 @@ public class UserConverter {
 		user.setEmail(userDTO.getEmail());
 		user.setIdentityNumber(userDTO.getIdentityNumber());
 		user.setAddress(userDTO.getAddress());
+		user.setBalance(userDTO.getBalance());
 		return user;
 	}
 	
@@ -38,6 +39,7 @@ public class UserConverter {
 		userDTO.setEmail(user.getEmail());
 		userDTO.setIdentityNumber(user.getIdentityNumber());
 		userDTO.setAddress(user.getAddress());
+		userDTO.setBalance(user.getBalance());
 		return userDTO;
 	}
 }

@@ -3,13 +3,18 @@ package com.uet.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uet.converter.BiddingConverter;
+import com.uet.dto.AuctionSessionDTO;
 import com.uet.dto.BiddingDTO;
 import com.uet.entity.Bidding;
+import com.uet.enums.Status;
 import com.uet.repository.BiddingRepo;
+import com.uet.service.IAuctionSessionService;
 import com.uet.service.IBiddingService;
 
 @Service
@@ -20,11 +25,19 @@ public class BiddingService implements IBiddingService{
 	@Autowired
 	private BiddingConverter biddingConverter;
 	
+	@Autowired
+	private IAuctionSessionService auctionSessionService;
+	
 	@Override
+	@Transactional
 	public BiddingDTO create(BiddingDTO biddingDTO) {
+		AuctionSessionDTO auctionSession = auctionSessionService.findOneById(biddingDTO.getAuctionSessionId());
 		Bidding bidding = biddingConverter.toEntity(biddingDTO);
-		biddingRepo.save(bidding);
-		return biddingConverter.toDTO(bidding);
+		if (auctionSession.getStatus().equals(Status.ACTIVE) && !auctionSessionService.isAuctionFinished(auctionSession)) {
+			biddingRepo.save(bidding);
+			return biddingConverter.toDTO(bidding);
+		}
+		return null;
 	}
 
 	@Override

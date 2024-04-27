@@ -35,6 +35,9 @@ public class User {
 	@Column
 	private String email;
 	
+	@Column
+	private int balance;
+	
 	@OneToMany(mappedBy = "user")
 	private List<Bidding> biddings;
 	
@@ -55,6 +58,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getBalance() {
+		return balance;
+	}
+
+	public void setBalance(int balance) {
+		this.balance = balance;
 	}
 
 	public String getUsername() {
