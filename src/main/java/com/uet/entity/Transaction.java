@@ -4,7 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class Transaction {
 	@Id
+	@Column(name = "auction_id")
 	private String auctionId;
 	
 	@Column
@@ -27,6 +32,11 @@ public class Transaction {
 	@Column
 	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
 	private Date date;
+	
+	@OneToOne
+	@MapsId
+	@JoinColumn(name = "auction_id")
+	private AuctionSession auctionSession;
 
 	public String getAuctionId() {
 		return auctionId;

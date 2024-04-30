@@ -49,7 +49,7 @@ public class AuctionSession {
 	@JoinColumn(name = "license_plate_id")
 	private LicensePlate licensePlate;
 	
-	@OneToOne()
+	@OneToOne(mappedBy = "auctionSession")
 	@PrimaryKeyJoinColumn
 	private Transaction transaction;
 	
