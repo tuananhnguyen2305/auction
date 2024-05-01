@@ -18,6 +18,9 @@ public class TransactionConverter {
 		if(transactionDTO.getAuctionId() != null) {
 			transaction.setAuctionId(transactionDTO.getAuctionId());
 		}
+		
+		AuctionSession auction = auctionSessionRepo.findOne(transaction.getAuctionId());
+		transaction.setAuctionSession(auction);
 		transaction.setAmount(transactionDTO.getAmount());
 		transaction.setDate(DateStringConverter.convertToDate(transactionDTO.getDate()));
 		transaction.setOwnerId(transactionDTO.getOwnerId());

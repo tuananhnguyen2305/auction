@@ -11,6 +11,8 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.CreatedDate;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Table
@@ -30,11 +32,12 @@ public class Transaction {
 	private int amount;
 	
 	@Column
+	@CreatedDate
 	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
 	private Date date;
 	
 	@OneToOne
-	@MapsId
+	//@Map
 	@JoinColumn(name = "auction_id")
 	private AuctionSession auctionSession;
 
@@ -76,5 +79,13 @@ public class Transaction {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public AuctionSession getAuctionSession() {
+		return auctionSession;
+	}
+
+	public void setAuctionSession(AuctionSession auctionSession) {
+		this.auctionSession = auctionSession;
 	}
 }

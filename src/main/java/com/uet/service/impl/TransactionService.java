@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.uet.converter.AuctionSessionConverter;
+import com.uet.converter.DateStringConverter;
 import com.uet.converter.TransactionConverter;
 import com.uet.dto.AuctionSessionDTO;
 import com.uet.dto.BiddingDTO;
@@ -22,17 +24,20 @@ public class TransactionService implements ITransactionService {
 	@Autowired
 	private TransactionConverter transactionConverter;
 	
+	@Autowired
+	private AuctionSessionConverter auctionSessionConverter;
 	
 	@Override
 	public TransactionDTO create(AuctionSessionDTO auctionSessionDTO, BiddingDTO biddingDTO) {
-		TransactionDTO transaction = new TransactionDTO();
+		Transaction transaction = new Transaction();
 		transaction.setAuctionId(auctionSessionDTO.getAuctionId());
-		transaction.setDate(auctionSessionDTO.getEndingTime());
+		transaction.setDate(DateStringConverter.convertToDate(auctionSessionDTO.getEndingTime()));
 		transaction.setWinerId(biddingDTO.getUserId());
 		transaction.setOwnerId(auctionSessionDTO.getUserId());
 		transaction.setAmount(biddingDTO.getAmount());
-		transactionRepo.save(transactionConverter.toEntity(transaction));
-		return transaction;
+		transaction.setAuctionSession(auctionSessionConverter.toEntity(auctionSessionDTO));
+		transactionRepo.save(transaction);
+		return transactionConverter.toDTO(transaction);
 	}
 
 	@Override
