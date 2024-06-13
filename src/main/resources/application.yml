@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3307/auction
+    username: root
+    password: Lvmeow2003
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  servlet:
+    multipart:
+      max-file-size: 10MB
+#jwt:
+#  privateKey: sYjC3iUxb5u4y4XtJYpStU9+NWJyy68ARfja3NcxE10=
+
+fileUpload:
+  rootPath: C:\Users\Dell\Desktop\Upload
