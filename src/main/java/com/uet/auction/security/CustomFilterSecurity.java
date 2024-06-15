@@ -11,12 +11,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class CustomFilterSecurity {
     @Autowired
     CustomUserDetailService customUserDetailService;
+
+    @Autowired
+    CustomJWTFilter customJWTFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity security) throws Exception{
@@ -35,6 +39,7 @@ public class CustomFilterSecurity {
                         .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 );
+        security.addFilterBefore(customJWTFilter, UsernamePasswordAuthenticationFilter.class);
         return security.build();
     }
 

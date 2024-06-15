@@ -13,8 +13,8 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
-#jwt:
-#  privateKey: sYjC3iUxb5u4y4XtJYpStU9+NWJyy68ARfja3NcxE10=
+jwt:
+  privateKey: sYjC3iUxb5u4y4XtJYpStU9+NWJyy68ARfja3NcxE10=
 
 fileUpload:
   rootPath: C:\Users\Dell\Desktop\Upload

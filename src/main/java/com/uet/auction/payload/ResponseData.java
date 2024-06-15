@@ -3,6 +3,7 @@ package com.uet.auction.payload;
 public class ResponseData {
     private int status;
     private String des;
+    private String token;
     private boolean isSuccess;
     private Object data;
 
@@ -20,6 +21,14 @@ public class ResponseData {
 
     public void setDes(String des) {
         this.des = des;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public boolean isSuccess() {

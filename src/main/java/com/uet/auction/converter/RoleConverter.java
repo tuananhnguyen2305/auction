@@ -16,10 +16,9 @@ public class RoleConverter {
     }
 
     public RoleDTO toDTO(Role role) {
-        Role entity = new Role();
         RoleDTO roleDTO = new RoleDTO();
-        roleDTO.setId(entity.getId());
-        roleDTO.setRoleName(entity.getRoleName().name());
+        roleDTO.setId(role.getId());
+        roleDTO.setRoleName(role.getRoleName().name());
         return roleDTO;
     }
 
