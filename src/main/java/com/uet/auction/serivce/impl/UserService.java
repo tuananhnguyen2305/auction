@@ -1,8 +1,7 @@
 package com.uet.auction.serivce.impl;
 
 import com.uet.auction.converter.UserConverter;
-import com.uet.auction.dto.RoleDTO;
-import com.uet.auction.dto.SignUpDTO;
+import com.uet.auction.dto.request.SignUpRequest;
 import com.uet.auction.entity.Role;
 import com.uet.auction.entity.User;
 import com.uet.auction.dto.UserDTO;
@@ -11,11 +10,13 @@ import com.uet.auction.repository.IUserRepository;
 import com.uet.auction.serivce.IRoleService;
 import com.uet.auction.serivce.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
@@ -44,16 +45,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean signUp(SignUpDTO signUpDTO) {
+    public boolean signUp(SignUpRequest signUpRequest) {
         try {
-            User user = new User();
-            user.setUsername(signUpDTO.getUsername());
-            user.setPassword(signUpDTO.getPassword());
-            user.setFullname(signUpDTO.getFullName());
-            user.setEmail(signUpDTO.getEmail());
-            user.setAddress(signUpDTO.getAddress());
-            user.setIdentityNumber(signUpDTO.getIdentityNumber());
-            user.setContactNumber(signUpDTO.getContactNumber());
+            User user = userConverter.toEntity(signUpRequest);
 
             Role role = new Role();
             role.setId(3);
@@ -70,9 +64,32 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean checkLogin(String username, String password) {
-        User user = userRepository.findByUsername(username);
-        return passwordEncoder.matches(password, user.getPassword());
+    public boolean createEmployee(UserDTO userDTO) {
+        try {
+            User user = new User();
+            user = userConverter.toEntity(userDTO);
+
+            Role role = Role.builder()
+                    .id(2)
+                    .roleName(RoleName.EMPLOYEE)
+                    .build();
+
+            user.setRole(role);
+
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error in saving employee: " + e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public UserDTO getMyInfo() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<User> user = userRepository.findByUsername(username);
+
+        return userConverter.toDTO(user.get());
     }
 
 

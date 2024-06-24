@@ -22,6 +22,18 @@ public class AuctionConverter {
         auctionDTO.setStartingPrice(entity.getStartingPrice());
         auctionDTO.setStt(entity.getStatus().name());
         auctionDTO.setLicenseId(entity.getLicense().getId());
+        return auctionDTO;
+    }
+
+    public AuctionDTO toDTO(Auction auction) {
+        AuctionDTO auctionDTO = new AuctionDTO();
+
+        auctionDTO.setId(auction.getId());
+        auctionDTO.setBeginningTime(dateStringConverter.convertToString(auction.getBeginningTime()));
+        auctionDTO.setEndingTime(dateStringConverter.convertToString(auction.getEndingTime()));
+        auctionDTO.setStartingPrice(auction.getStartingPrice());
+        auctionDTO.setStt(auction.getStatus().name());
+        auctionDTO.setLicenseId(auction.getLicense().getId());
 
         return auctionDTO;
     }

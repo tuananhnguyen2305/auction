@@ -32,4 +32,21 @@ public class AuctionAPI {
 
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> approveAuction(@PathVariable int id) {
+        ResponseData responseData = new ResponseData();
+        responseData.setData(auctionService.approveAuction(id));
+        responseData.setSuccess(true);
+
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> denyAuction(@PathVariable int id) {
+        ResponseData responseData = new ResponseData();
+        responseData.setSuccess(auctionService.denyAuction(id));
+
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
 }

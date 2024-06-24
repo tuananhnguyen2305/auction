@@ -59,4 +59,24 @@ public class AuctionService implements IAuctionService {
 
         return auctionConverter.toDTO(auction);
     }
+
+    @Override
+    public AuctionDTO approveAuction(int id) {
+        Auction auction = auctionRepository.findById(id).get();
+        auction.setStatus(Status.ACTIVE);
+
+        auctionRepository.save(auction);
+        return auctionConverter.toDTO(auction);
+    }
+
+    @Override
+    public boolean denyAuction(int id) {
+        try {
+            auctionRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error in denying auction");
+        }
+        return false;
+    }
 }

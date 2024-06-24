@@ -8,7 +8,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.Date;
 
 @Entity(name = "bidding")
-@EntityListeners(AuditingEntityListener.class)
 public class Bidding{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
